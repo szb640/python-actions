@@ -1,0 +1,45 @@
+name: Check project version
+description: Check the version of a Python project against an expected version, such as a release tag.
+inputs:
+  project-directory:
+    description: Path to the directory containing pyproject.toml.
+    default: ${{ github.workspace }}
+  expected-version:
+    description: >
+      The expected version. By default, this is `github.ref_name`, which is the
+      tag for a `release` event. If the version has a leading 'v', it will be
+      stripped.
+    default: ${{ github.ref_name }}
+runs:
+  using: composite
+  steps:
+  - name: Check project version
+    run: |
+      project_version="$(poetry version --short)"
+      expected_version="${{ inputs.expected-version }}"
+      # Strip the leading 'v', in case this is a GitHub release tag.
+      expected_version="${expected_version#v}"
+
+      error_message="$(cat <<EOF
+      The project version in pyproject.toml does not match the expected version.
+      
+      If this workflow was triggered by a GitHub release, verify that the
+      release was tagged with the correct version. If they don't match, you
+      should either update pyproject.toml or delete and re-create the release
+      with the correct tag.
+
+      Project version: $project_version
+      Expected version: $expected_version
+      EOF
+      )"
+
+      # Convert newline to %0A so that GitHub includes the entire error message
+      # in the annotation.
+      error_message="$(echo "$error_message" | sed -z 's/\n/%0A/g;s/%0A$/\n/')"
+
+      if [ x"$project_version" != x"$expected_version" ]; then
+        echo "::error title=Project Version Error::$error_message"
+        exit 1
+      fi
+    shell: bash
+    working-directory: ${{ inputs.project-directory }}
