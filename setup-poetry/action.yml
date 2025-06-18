@@ -69,3 +69,12 @@ runs:
     - name: Print Poetry version
       run: poetry --version
       shell: bash
+    - name: Log debug info
+      if: failure()
+      run: |
+        echo "GITHUB_WORKSPACE=$GITHUB_WORKSPACE"
+        echo "PATH=$PATH"
+        echo "RUNNER_TEMP=$RUNNER_TEMP"
+        echo "RUNNER_TOOL_CACHE=$RUNNER_TOOL_CACHE"
+        ls -al "$POETRY_BIN_DIR" "$POETRY_HOME" "$POETRY_HOME_BIN" || true
+      shell: bash
