@@ -27,18 +27,18 @@ runs:
     - name: Set paths (Linux/Mac)
       if: runner.os != 'Windows'
       run: |
-        echo "POETRY_BIN_DIR=$HOME/.local/poetry/bin" >> "$GITHUB_ENV"
-        echo "POETRY_HOME=$HOME/.local/poetry/home" >> "$GITHUB_ENV"
-        echo "POETRY_HOME_BIN=$HOME/.local/poetry/home/bin" >> "$GITHUB_ENV"
-        echo "$HOME/.local/poetry/bin" >> "$GITHUB_PATH"
+        echo "POETRY_BIN_DIR=$RUNNER_TEMP/poetry/bin" >> "$GITHUB_ENV"
+        echo "POETRY_HOME=$RUNNER_TEMP/poetry/home" >> "$GITHUB_ENV"
+        echo "POETRY_HOME_BIN=$RUNNER_TEMP/poetry/home/bin" >> "$GITHUB_ENV"
+        echo "$RUNNER_TEMP/poetry/bin" >> "$GITHUB_PATH"
       shell: bash
     - name: Set paths (Windows)
       if: runner.os == 'Windows'
       run: |
-        Add-Content $env:GITHUB_ENV "POETRY_BIN_DIR=$HOME\.local\poetry\bin"
-        Add-Content $env:GITHUB_ENV "POETRY_HOME=$HOME\.local\poetry\home"
-        Add-Content $env:GITHUB_ENV "POETRY_HOME_BIN=$HOME\.local\poetry\home\Scripts"
-        Add-Content $env:GITHUB_PATH "$HOME\.local\poetry\bin"
+        Add-Content $env:GITHUB_ENV "POETRY_BIN_DIR=$env:RUNNER_TEMP\poetry\bin"
+        Add-Content $env:GITHUB_ENV "POETRY_HOME=$env:RUNNER_TEMP\poetry\home"
+        Add-Content $env:GITHUB_ENV "POETRY_HOME_BIN=$env:RUNNER_TEMP\poetry\home\Scripts"
+        Add-Content $env:GITHUB_PATH "$env:RUNNER_TEMP\poetry\bin"
       shell: pwsh
     - name: Copy paths from $GITHUB_ENV to $GITHUB_OUTPUT
       id: copy-paths
