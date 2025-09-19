@@ -28,6 +28,7 @@ runs:
       if: runner.os != 'Windows'
       run: |
         echo "POETRY_BIN_DIR=$RUNNER_TEMP/poetry/bin" >> "$GITHUB_ENV"
+        echo "POETRY_CONFIG_DIR=$RUNNER_TEMP/poetry/config" >> "$GITHUB_ENV"
         echo "POETRY_HOME=$RUNNER_TEMP/poetry/home" >> "$GITHUB_ENV"
         echo "POETRY_HOME_BIN=$RUNNER_TEMP/poetry/home/bin" >> "$GITHUB_ENV"
         echo "$RUNNER_TEMP/poetry/bin" >> "$GITHUB_PATH"
@@ -36,6 +37,7 @@ runs:
       if: runner.os == 'Windows'
       run: |
         Add-Content $env:GITHUB_ENV "POETRY_BIN_DIR=$env:RUNNER_TEMP\poetry\bin"
+        Add-Content $env:GITHUB_ENV "POETRY_CONFIG_DIR=$env:RUNNER_TEMP\poetry\config"
         Add-Content $env:GITHUB_ENV "POETRY_HOME=$env:RUNNER_TEMP\poetry\home"
         Add-Content $env:GITHUB_ENV "POETRY_HOME_BIN=$env:RUNNER_TEMP\poetry\home\Scripts"
         Add-Content $env:GITHUB_PATH "$env:RUNNER_TEMP\poetry\bin"
