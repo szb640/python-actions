@@ -1,7 +1,7 @@
 [project]
-name = "test-project"
+name = "mypy-errors"
 version = "0.1.0"
-description = ""
+description = "Tests actions/analyze-project with a project that has mypy errors"
 authors = [
     {name = "Joel Dixon",email = "joel.dixon@ni.com"}
 ]
@@ -17,20 +17,15 @@ ni-python-styleguide = ">=0.4.1"
 mypy = ">=1.0"
 pyright = { version = ">=1.1.400", extras = ["nodejs"] }
 
-[tool.ni-python-styleguide]
-extend_exclude = "update-project-version,.github"
-
 [tool.mypy]
 mypy_path = "."
 files = "."
 namespace_packages = true
 strict = true
 explicit_package_bases = true
-exclude = "update-project-version"
 
 [tool.pyright]
 include = ["src/", "tests/"]
-exclude = ["update-project-version"]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
