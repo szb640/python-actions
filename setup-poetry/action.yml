@@ -28,18 +28,17 @@ runs:
       run: |
         poetry_root="$RUNNER_TEMP/poetry"
         poetry_home="$poetry_root/home"
-        poetry_bin="$poetry_root/bin"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           binary_folder_name="Scripts"
         else
           binary_folder_name="bin"
         fi
 
-        echo "POETRY_BIN_DIR=$poetry_bin" >> "$GITHUB_ENV"
-        echo "POETRY_CONFIG_DIR=$poetry_root/config" >> "$GITHUB_ENV"
-        echo "POETRY_HOME=$poetry_home" >> "$GITHUB_ENV"
-        echo "POETRY_HOME_BIN=$poetry_home/$binary_folder_name" >> "$GITHUB_ENV"
-        echo "$poetry_bin" >> "$GITHUB_PATH"
+        echo "POETRY_BIN_DIR=$(realpath -m $poetry_root/bin)" >> "$GITHUB_ENV"
+        echo "POETRY_CONFIG_DIR=$(realpath -m $poetry_root/config)" >> "$GITHUB_ENV"
+        echo "POETRY_HOME=$(realpath -m $poetry_home)" >> "$GITHUB_ENV"
+        echo "POETRY_HOME_BIN=$(realpath -m $poetry_home/$binary_folder_name)" >> "$GITHUB_ENV"
+        echo "$(realpath -m $poetry_root/bin)" >> "$GITHUB_PATH"
       shell: bash
     - name: Copy paths from $GITHUB_ENV to $GITHUB_OUTPUT
       id: copy-paths
