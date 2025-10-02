@@ -29,6 +29,7 @@ runs:
         poetry_root="$RUNNER_TEMP/poetry"
         poetry_home="$poetry_root/home"
         poetry_bin="$poetry_root/bin"
+        poetry_config="$poetry_root/config"
         if [[ "$RUNNER_OS" == "Windows" ]]; then
           binary_folder_name="Scripts"
         else
@@ -36,7 +37,7 @@ runs:
         fi
 
         echo "POETRY_BIN_DIR=$poetry_bin" >> "$GITHUB_ENV"
-        echo "POETRY_CONFIG_DIR=$poetry_root/config" >> "$GITHUB_ENV"
+        echo "POETRY_CONFIG_DIR=$poetry_config" >> "$GITHUB_ENV"
         echo "POETRY_HOME=$poetry_home" >> "$GITHUB_ENV"
         echo "POETRY_HOME_BIN=$poetry_home/$binary_folder_name" >> "$GITHUB_ENV"
         echo "$poetry_bin" >> "$GITHUB_PATH"
